@@ -7,9 +7,9 @@ import javax.sql.DataSource;
 
 public class SingleThreadConnectionHolder {
 
-	private ThreadLocal<ConnectionHolder> holder = new ThreadLocal<ConnectionHolder>();
+	private static ThreadLocal<ConnectionHolder> holder = new ThreadLocal<ConnectionHolder>();
 
-	public Connection getConnection(DataSource source) throws SQLException {
+	public static Connection getConnection(DataSource source) throws SQLException {
 
 		ConnectionHolder cHolder = holder.get();
 		if (cHolder != null) {
@@ -21,7 +21,7 @@ public class SingleThreadConnectionHolder {
 		}
 	}
 
-	public void releaseConnection(DataSource source) throws SQLException {
+	public static void releaseConnection(DataSource source) throws SQLException {
 		ConnectionHolder cHolder = holder.get();
 		if (cHolder != null) {
 			cHolder.releaseConnection(source);
